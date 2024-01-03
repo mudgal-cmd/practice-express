@@ -1,0 +1,26 @@
+{
+  "name": "express-tutorial",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mudgal-cmd/practice-express.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mudgal-cmd/practice-express/issues"
+  },
+  "homepage": "https://github.com/mudgal-cmd/practice-express#readme",
+  "dependencies": {
+    "-": "^0.0.1",
+    "D": "^1.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
