@@ -1,3 +1,6 @@
+//HERE WE'VE HANDLED ALL THE HTTP REQUESTS USING THE HTTP MODULE/LIBRARY.
+
+
 const http = require('http');
 
 const { readFileSync } = require('fs');
