@@ -23,7 +23,9 @@ app.get('/api/products', (req, res)=>{
 });
 
 app.get('/api/products/1', (req, res)=>{
-  res.send(products.filter((product)=>product.id===1));
+  // res.send(products.filter((product)=>product.id===1));
+  const product = products.find((product)=> product.id === 1);
+  res.json(product);
 });
 
 app.listen(5000, ()=>{
