@@ -39,4 +39,6 @@ const people = [
   { id: 4, name: 'anna' },
   { id: 5, name: 'emma' },
 ]
+
+//Replacing the data with the data from fakestoreapi.
 module.exports = { products, people }
