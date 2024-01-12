@@ -13,7 +13,7 @@ const logger = (req, res, next)=>{ //could have used app.use() to add middleware
   console.log(url);
   console.log(time.getTime());
 
-  if(url === '/asd'){
+  if(url === '/'){
     return res.send('Hello World');
   }
 
