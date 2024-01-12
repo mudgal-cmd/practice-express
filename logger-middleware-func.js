@@ -6,6 +6,7 @@ const logger = (req, res, next)=>{
   console.log(url);
   console.log(method);
   console.log(time.getMonth);
+  next();
 }
 
 module.exports = logger;

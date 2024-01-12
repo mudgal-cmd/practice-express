@@ -6,24 +6,14 @@ const logger = require('./logger-middleware-func');
 
 const axios = require('axios');
 
-// axios.get('https://fakestoreapi.com/products')
-// .then((response)=>{
-//   products = response.data;
-// });
+app.use(logger); //app.use() -> ensures that the provided middleware will be applied to all the route methods.
 
-async function getProducts(){
+async function fetchProducts(){
   const res = await axios.get('https://fakestoreapi.com/products');
   const data = res.data;
-  const products = [];
-  products.push(data);
-  return products;
-  // return products;
-  // console.log(products);
+  return data // this will be a promise, because async-await always returns a promise
+
 }
-
-// const products = getProducts();
-
-// products.then(data=>console.log(data));
 
 app.get('/',(req, res)=>{
   res.send('Home Page');
@@ -33,18 +23,27 @@ app.get('/about',(req, res)=>{
 });
 app.get('/api/products',(req, res)=>{
   // res.send('Home Page');
-  const products = getProducts();
-
+  const products = fetchProducts();
   products.then(data=>{
     res.send(data);
-  });
+  }).catch(err=> console.log(err));
 
 });
-// app.get('/api/items',(req, res)=>{
-//   res.send('Home Page');
-// });
-// console.log(products);
-// console.log(products);
+app.get('/api/products/items', (req, res)=>{
+  const products = fetchProducts();
+  products.then(data=>{
+    // res.send(data[0]);
+    const newArray = [];
+    console.log(data.length);
+    for(let i = 0; i < data.length; i++){
+      const newObj = {id: data[i].id, title:data[i].title, price : data[i].price, rating:data[i].rating};
+      // console.log(newObj);  
+      newArray.push(newObj);
+    }
+    res.send(newArray);
+
+  }).catch(err=>console.log(err));
+});
 
 app.listen(5000, ()=>{
   console.log('Server is listening on port 5000...');
