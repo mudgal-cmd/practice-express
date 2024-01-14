@@ -6,7 +6,11 @@ const logger = require('./logger-middleware-func');
 
 const axios = require('axios');
 
-app.use(logger); //app.use() -> ensures that the provided middleware will be applied to all the route methods.
+// app.use(logger); //app.use() -> ensures that the provided middleware will be applied to all the route methods.
+
+// If ever there's a need to invoke a middleware only for the route methods that correspond to the URL starting after a certain path - here say, '/api', so we can use middleware in the following manner
+
+app.use('/api', logger);
 
 async function fetchProducts(){
   const res = await axios.get('https://fakestoreapi.com/products');
@@ -34,7 +38,7 @@ app.get('/api/products/items', (req, res)=>{
   products.then(data=>{
     // res.send(data[0]);
     const newArray = [];
-    console.log(data.length);
+    // console.log(data.length);
     for(let i = 0; i < data.length; i++){
       const newObj = {id: data[i].id, title:data[i].title, price : data[i].price, rating:data[i].rating};
       // console.log(newObj);  
