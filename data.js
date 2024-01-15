@@ -40,25 +40,4 @@ const people = [
   { id: 5, name: 'emma' },
 ]
 
-// const obj = {id:1, name:'Jacob'};
-// const arr = [];
-
-// for(let i = 0; i<people.length; i++){
-//   const ob = {name: people[i].name};
-//   arr.push(ob);
-// }
-
-// console.log(arr);
-
-// let newObj = {};
-// const newObjArray = [];
-
-// for(let i =0; i<people.length; i++){
-//   // newObj[people[i].name] = people[i]
-//   console.log(people[i][1]);
-// }
-
-// console.log(newObj);
-
-//Replacing the data with the data from fakestoreapi.
 module.exports = { products, people }

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="methods-public/normalize.css" />
+    <link rel="stylesheet" href="methods-public/styles.css" />
+    <title>Javascript</title>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-center">
+        <h5>HTTP Methods</h5>
+        <div>
+          <a href="index.html">regular </a>
+          <a href="javascript.html">javascript </a>
+        </div>
+      </div>
+    </nav>
+    <main>
+      <section>
+        <form>
+          <h3>Javascript Form</h3>
+          <div class="form-row">
+            <label for="name"> enter name </label>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              class="form-input"
+              autocomplete="false"
+            />
+            <small class="form-alert"></small>
+          </div>
+          <button type="submit" class="block submit-btn">submit</button>
+        </form>
+        <div class="result"></div>
+      </section>
+    </main>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+      integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+      crossorigin="anonymous">
+    </script>
+    <script>
+
+      const result = document.querySelector('.result');
+
+      async function fetchProducts(){
+        const response = await axios.get('http://localhost:5000/api/people');
+        const peopleData = response.data;
+        console.log(peopleData.data);
+
+        const people = peopleData.data.map(item=>{
+          return `<h3>${item.name}</h3> `;
+        });
+
+        result.innerHTML = people.join(' ');
+
+      }
+      fetchProducts();
+
+        const submitBtn = document.querySelector('.submit-btn');
+
+        let h3 = document.createElement('h3');
+
+        
+
+        submitBtn.addEventListener('click', async (e)=>{
+
+          e.preventDefault();
+
+          const input = document.querySelector('.form-input');
+
+          console.log(input.value);
+
+          const request = await axios.post('http://localhost:5000/api/people', {name: input.value});
+          
+          console.log(request.data.person);
+
+          h3.textContent=request.data.person;
+
+          result.innerHTML+=request.data.person;
+
+          input.value = '';
+          
+        });
+
+        
+    </script>
+    
+
+</body>
+</html>
