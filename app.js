@@ -22,7 +22,7 @@ app.post('/api/people', (req, res)=>{
   if(!name){
     return res.status(404).json({success: false, person: 'Cannot add the person'});
   }
-
+  
   console.log('Post request',name);
   res.status(201).json({success: 'hogya', person: name});
 });

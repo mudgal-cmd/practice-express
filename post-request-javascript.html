@@ -53,7 +53,7 @@
         console.log(peopleData.data);
 
         const people = peopleData.data.map(item=>{
-          return `<h3>${item.name}</h3> `;
+          return `<h5>${item.name}</h5> `;
         });
 
         result.innerHTML = people.join(' ');
@@ -63,7 +63,7 @@
 
         const submitBtn = document.querySelector('.submit-btn');
 
-        let h3 = document.createElement('h3');
+        let h5 = document.createElement('h5');
 
         
 
@@ -79,9 +79,9 @@
           
           console.log(request.data.person);
 
-          h3.textContent=request.data.person;
+          h5.textContent=request.data.person;
 
-          result.innerHTML+=request.data.person;
+          result.innerHTML+=`<h5>${request.data.person}</h5>`;
 
           input.value = '';
           
