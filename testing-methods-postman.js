@@ -31,26 +31,73 @@ app.get('/api/products', (req, res)=>{
 
 });
 
+app.get('/api/findProductById', (req, res)=>{
+  const {id} = req.query;
+
+  const productsPromise = fetchProducts();
+
+  productsPromise.then(data=>{
+    const searchedProduct = data.filter(product=> 
+      product.id === Number(id)
+      );
+
+      if(!searchedProduct || searchedProduct.length<1){
+        return res.status(200).json({success:true, data:[]});
+      }
+    res.status(200).json(searchedProduct);
+  });
+
+});
+
 app.get('/api/users', (req, res)=>{
   
   const userPromise = fetchUsers();
 
-  userPromise.then(data =>{
-    res.send(data);
-  });
+  const {query} = req.query;
+  console.log(query);
 
-});
+  if(!query || Object.keys(query).length<1){
+    return res.status(404).send('Please enter a parameter to search');
+  }
+
+  userPromise.then(data =>{
+    
+    if(isNaN(Number(query))){
+      const searchedUser = data.filter(user=>user.username === query);
+      // console.log(searchedUser);
+      return res.status(200).json(searchedUser);
+    }
+    else{
+      const searchedUser = data.filter(user => user.id === Number(query));
+      console.log(searchedUser);
+      return res.status(200).json(searchedUser);
+    }
+
+    });
+
+  });
 
 app.post('/api/users', (req, res)=>{
 
   const body = req.body;
 
-  const userPromise = fetchUsers();
+  if(!body || Object.keys(body).length<1){
+    return res.status(404)
+    .json({
+      success:false,
+      msg: "No user provided."
+    });
+  }
+  else{
 
-  userPromise.then(data=>{
-    data.push(body);
-    res.status(201).send({success:true, userData: data});
-  })
+    const userPromise = fetchUsers();
+
+    userPromise.then(data=>{
+      data.push(body);
+      res.status(201).send({success:true, userData: data});
+    });
+
+  }
 
 });
 
