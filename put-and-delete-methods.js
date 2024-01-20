@@ -15,43 +15,81 @@ async function fetchUsers() {
   return data;
 }
 
-app.put('/api/users/:id', (req, res) => {
+// app.put('/api/users/:id', (req, res) => {
 
-  const { id } = req.params;
+//   const { id } = req.params;
 
-  const { uname } = req.body; //Field to be updated
-  console.log(id, uname);
+//   const { uname } = req.body; //Field to be updated
+//   console.log(id, uname);
+
+//   const usersPromise = fetchUsers();
+
+//   usersPromise.then(users => {
+
+//     const updatedUsers = [...users];
+
+//     const userToBeUpdated = updatedUsers.filter(user => user.id === Number(id));
+//     // console.log(userToBeUpdated, Object.keys(userToBeUpdated));
+
+//     const updatedUserIndex = updatedUsers.findIndex(user => user.id === Number(id));
+
+//     if (!userToBeUpdated || Object.keys(userToBeUpdated).length < 1) {
+//       return res.status(404).json({ success: true, data: 'No user found' });
+//     } //If the user does not exist.
+
+//     else {
+
+//       console.log(userToBeUpdated);
+
+//       userToBeUpdated[0].username = uname;
+
+//       updatedUsers.splice(updatedUserIndex,1, userToBeUpdated);
+
+//       res.status(201).json({ success: true, data: updatedUsers });
+//     }
+
+
+//   }).catch(err => console.log(err));
+
+// });
+
+
+
+// Making changes to the users/ making put request using 'MAP' - reason being the map() function returns the modified version of the data.
+
+app.put('/api/users/:id', (req, res)=>{
 
   const usersPromise = fetchUsers();
 
-  usersPromise.then(users => {
+  const {id} = req.params;
 
-    const updatedUsers = [...users];
+  const {uname} = req.body;
 
-    const userToBeUpdated = updatedUsers.filter(user => user.id === Number(id));
-    // console.log(userToBeUpdated, Object.keys(userToBeUpdated));
+  console.log(req.query);
 
-    const updatedUserIndex = updatedUsers.findIndex(user => user.id === Number(id));
+  if(isNaN(Number(id)) || !uname){
+    return res.status(400).json({success:false, data:'Invalid details'});
+  }
 
-    if (!userToBeUpdated || Object.keys(userToBeUpdated).length < 1) {
-      return res.status(404).json({ success: true, data: 'No user found' });
-    } //If the user does not exist.
+  usersPromise.then(
+    users => {
+      // res.send(users);
 
-    else {
+      const userData = users.map(user => {
+        if(user.id === Number(id)){
+          user.username = uname;
+          return user;
+        }
+        return user;
+      });
 
-      console.log(userToBeUpdated);
+      res.status(200).json({success:true, data:userData});
 
-      userToBeUpdated[0].username = uname;
-
-      updatedUsers.splice(updatedUserIndex,1, userToBeUpdated);
-
-      res.status(201).json({ success: true, data: updatedUsers });
     }
-
-
-  }).catch(err => console.log(err));
+  ).catch(err=> {console.log(err)});
 
 });
+
 
 app.delete('/api/deleteUserById/:id', (req, res) => {
 
