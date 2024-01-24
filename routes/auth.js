@@ -1,10 +1,8 @@
 const express = require('express');
 
-const app = express();
-
 const router = express.Router();
 
-router.get('/login', (req, res)=>{
+router.get('/', (req, res)=>{
   res.send('User is authorized');
 });
 
