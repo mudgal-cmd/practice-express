@@ -6,19 +6,7 @@ const session = require('express-session');
 
 const app = express();
 
-const axios = require('axios');
-
 app.use(express.json());
-
-async function fetchCart(){
-    
-  const response = await axios.get('https://fakestoreapi.com/carts');
-
-  const cartData = response.data;
-
-  return cartData;
-
-}
 
 //To selectively use a middleware, just provide the endpoint before the middleware is invoked, eg: '/api/auth/status', here before session().
 app.use(session({
@@ -55,26 +43,6 @@ app.get('/api/auth/status', (req, res)=>{
   console.log(req.session);
 
   return req.session.user? res.status(200).send(req.session.user) : res.send("Not authenticated");
-
-});
-
-app.post('/api/cart/addToCart', (req, res)=>{
-  // 
-  const cartData = fetchCart();
-
-  const {body} = req;
-
-  cartData.then(cart => {
-    
-    console.log(cart);
-
-    console.log(body);
-
-    cart.push(body);
-
-    res.status(200).json({success:true, data: cart});
-
-  }).catch(err=> console.log(err));
 
 });
 
