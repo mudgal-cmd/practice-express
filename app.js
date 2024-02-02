@@ -66,9 +66,12 @@ app.post('/api/cart/addToCart', (req, res)=>{
 
   cartData.then(cart => {
     
-    console.log(cart);
+    // console.log(cart);
 
-    console.log(body);
+    // console.log(body);
+    if(req.session.user){
+      
+    }
 
     cart.push(body);
 
