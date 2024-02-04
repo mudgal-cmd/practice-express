@@ -32,8 +32,22 @@ app.get('/api/login', (req, res)=>{
 app.get('/api/getCart', (req, res)=>{
   console.log(req.cookies);
   if(req.cookies && req.cookies.loginCookie === 'authorized'){
-    
+
+    const cartPromise = fetchCart();
+
+    cartPromise.then(cart=> {
+      return res.status(200).send(cart);
+    }).catch(err=> console.log(err));
+
+    // res.status(200)
   }
+
+  else{
+    return res.status(401).send('You are not authorized to access the content');
+  }
+
+  
+
 });
 
 app.listen(5000, ()=>{
