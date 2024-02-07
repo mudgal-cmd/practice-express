@@ -28,12 +28,17 @@ app.use(passport.session()); // This will take care of attaching a dynamic user 
 
 
 
-app.post("/api/login", passport.authenticate('local'), (req, res)=>{
+app.post("/api/auth", passport.authenticate('local'), (req, res)=>{
   console.log('Hi from login');
 
   res.sendStatus(200);
 //We can specifiy different strategies inside the passport.authenticate method, like 'google', 'github', etc.
 
+});
+
+app.get('/api/auth/status', (req, res)=>{
+  console.log('I am auth Status');
+  res.status(200).send(req.user);
 });
 
 app.listen(5000, ()=>{
