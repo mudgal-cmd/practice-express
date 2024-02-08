@@ -7,7 +7,7 @@ const userData = require('../constant');
 passport.serializeUser((user, done)=>{
   console.log('Serializer function');
   console.log(user);
-  done(null, user.id);
+  done(null, user.id); // we can even use 'done(null, user.displayName)' - this simply means we're serializing the object using the user's name which will be displayed in the passport object in session store, i.e., passport : {user: 'Smith'}
   
 });
 
